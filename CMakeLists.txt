@@ -4,7 +4,7 @@ project(cminpack2fort LANGUAGES Fortran C)
 
 if (NOT DEFINED CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
-endif ()
+endif()
 
 option(USE_BLAS OFF)
 set(CMINPACK_PRECISION "d" CACHE STRING "Needs to be double precision")
@@ -19,5 +19,8 @@ target_include_directories(cminpack2fort PUBLIC
                           ${CMAKE_CURRENT_SOURCE_DIR}/cminpack-1.3.8
                           )
 
-add_executable(test_wrapper ${CMAKE_CURRENT_SOURCE_DIR}/test_wrapper.f90)
-target_link_libraries(test_wrapper PUBLIC cminpack cminpack2fort )
+option (BUILD_EXAMPLES "Build the example." ON)
+if (BUILD_EXAMPLES)
+  add_executable(test_wrapper ${CMAKE_CURRENT_SOURCE_DIR}/test_wrapper.f90)
+  target_link_libraries(test_wrapper PUBLIC cminpack cminpack2fort )
+endif()
